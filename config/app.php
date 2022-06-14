@@ -232,4 +232,27 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Debug blacklist
+    |--------------------------------------------------------------------------
+    |
+    | The values of the variables listed here will be masked on the debug 
+    | output when an exception is thrown.
+    |
+    */
+
+    'debug_blacklist' => [
+
+        '_ENV_' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'AWS_SECRET_ACCESS_KEY',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+    ],
+
 ];
