@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use \App\Models\Link;
+use \App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $links = Link::all();
+
+    return view('welcome', ['links' => $links]);
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/submit', function() {
+    return view('submit');
+});
+
+Route::post('/submit', function (Request $request) {
+    $data = $request->validate([
+        'title' => 'required | max:255',
+        'url' => 'required | url | max:255',
+        'description' => 'required | max:255',
+    ]);
+
+    $link = tap(new Link($data))->save();
+
+    return redirect('/');
+});
